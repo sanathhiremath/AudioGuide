@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AudioGuide.Helper;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using AudioGuide.Helper;
 using static AudioGuide.Models.Info;
 
 namespace AudioGuide.DataLayer
@@ -49,7 +49,7 @@ namespace AudioGuide.DataLayer
                 command.ExecuteNonQuery();
                 response = true;
             }
-            catch ()
+            catch (Exception ex)
             {
 
             }
@@ -80,6 +80,46 @@ namespace AudioGuide.DataLayer
 
             }
             return response;
+        }
+
+        public static Doctor GetDoctorDetails(string email, string password)
+        {
+            SqlCommand command = null;
+            SqlConnection connection = null;
+            Doctor doctorDetails = new Doctor();
+            try
+            {
+                MSSQLAccess.CreateConnection(ref connection);
+                MSSQLAccess.InitializeSqlCommandComponent(ref connection, ref command, "GetDoctorDetails");
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Password", password);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+            }
+            return doctorDetails;
+        }
+
+        public static Patient GetPatientDetails(string email, string password)
+        {
+            SqlCommand command = null;
+            SqlConnection connection = null;
+            Patient patientDetails = new Patient();
+            try
+            {
+                MSSQLAccess.CreateConnection(ref connection);
+                MSSQLAccess.InitializeSqlCommandComponent(ref connection, ref command, "GetPatientDetails");
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Password", password);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+            }
+            return patientDetails;
         }
 
         public static DataSet VerifyUserCredentials(string email, string password)

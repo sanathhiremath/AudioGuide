@@ -30,5 +30,10 @@ namespace AudioGuide.Controllers
             return Ok(DataAccess.RegisterPatient(patientDetails));
         }
 
+        public IHttpActionResult GetDoctorDetails(string email, string password)
+        {
+            return Ok();
+        }
+
     }
 }
